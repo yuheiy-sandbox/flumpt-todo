@@ -13,18 +13,20 @@ const storage = data => {
   return store && JSON.parse(store) || [];
 };
 
+const {todos, showing} = storage();
+
 const app = new App({
   renderer: el => {
     render(el, document.querySelector('#app'));
   },
   initialState: {
-    todos: storage(),
-    showing: 'all'
+    todos: todos ? todos : [],
+    showing: showing ? showing : 'all'
   },
   middlewares: [
     state => {
       console.log(state);
-      storage(state.todos);
+      storage(state);
       return state;
     }
   ]

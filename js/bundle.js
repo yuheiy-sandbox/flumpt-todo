@@ -388,17 +388,22 @@ var storage = function storage(data) {
   return store && JSON.parse(store) || [];
 };
 
+var _storage = storage();
+
+var todos = _storage.todos;
+var showing = _storage.showing;
+
 var app = new _app2.default({
   renderer: function renderer(el) {
     (0, _reactDom.render)(el, document.querySelector('#app'));
   },
   initialState: {
-    todos: storage(),
-    showing: 'all'
+    todos: todos ? todos : [],
+    showing: showing ? showing : 'all'
   },
   middlewares: [function (state) {
     console.log(state);
-    storage(state.todos);
+    storage(state);
     return state;
   }]
 });
